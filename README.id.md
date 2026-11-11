@@ -8,6 +8,19 @@ Bahasa: [English](README.md) | Bahasa Indonesia
 
 GFF Farma adalah aplikasi web berbasis PHP dan MySQL untuk mengelola stok obat, akun pelanggan, dan transaksi pembelian di apotek skala kecil. Proyek ini dibuat sebagai Project Akhir mata kuliah Basis Data tahun 2025.
 
+## Demo langsung
+
+Demo statis berjalan di GitHub Pages: https://febrianggi.github.io/php-mysql-pharmacy-database/
+
+Demo ini salinan tampilan yang hanya berjalan di browser, tanpa PHP dan MySQL. Data contoh ada di dalam `index.html`, dan semua perubahan yang kamu buat (pembelian, obat baru, edit, akun baru) tersimpan di browsermu sendiri lewat localStorage. Tombol "Reset data demo" mengembalikan data ke awal.
+
+| Peran | Username | Password |
+|---|---|---|
+| Pelanggan | `demo` | `demo123` |
+| Admin | `admin` | `admin123` |
+
+Akun ini hanya ada di demo dan terpisah dari akun admin pada versi lengkap PHP dan MySQL di `app/`.
+
 ## Latar belakang
 
 Apotek skala UMKM punya kewajiban pelaporan pajak yang sama dengan perusahaan besar, tetapi banyak yang hanya memakai buku tulis atau tidak mencatat sama sekali, sehingga akuntansi dan pelaporan pajak jadi sulit di kemudian hari. GFF Farma mencatat stok obat dan riwayat transaksi dalam satu database.
@@ -54,38 +67,44 @@ users (1) ────< transactions >──── (1) obat
 
 ```
 .
-├── db_connect.php          # Koneksi DB, membuat tabel dan admin bawaan otomatis
-├── login.php / logout.php / signup.php
-├── index.php               # Halaman utama: tabel obat, transaksi, dan user
-├── add.php / insert.php    # Tambah obat
-├── edit.php / update.php   # Edit obat
-├── delete.php              # Hapus obat
-├── process_purchase.php    # Catat pembelian dan kurangi stok
-├── edit_transaction.php / delete_transaction.php
-├── edit_customer.php / delete_customer.php
-├── check_medicine_code.php / get_medicine.php   # Helper AJAX
-├── style.css
-├── database.sql            # Opsional: skema dan contoh data obat (impor manual)
+├── index.html              # Demo statis untuk GitHub Pages (hanya jalan di browser)
+├── .nojekyll
+├── app/                    # Aplikasi lengkap PHP dan MySQL
+│   ├── db_connect.php          # Koneksi DB, membuat tabel dan admin bawaan otomatis
+│   ├── login.php / logout.php / signup.php
+│   ├── index.php               # Halaman utama: tabel obat, transaksi, dan user
+│   ├── add.php / insert.php    # Tambah obat
+│   ├── edit.php / update.php   # Edit obat
+│   ├── delete.php              # Hapus obat
+│   ├── process_purchase.php    # Catat pembelian dan kurangi stok
+│   ├── edit_transaction.php / delete_transaction.php
+│   ├── edit_customer.php / delete_customer.php
+│   ├── check_medicine_code.php / get_medicine.php   # Helper AJAX
+│   ├── style.css
+│   └── database.sql            # Opsional: skema dan contoh data obat (impor manual)
+├── data/                   # Data Excel dan tahapan normalisasi (UNF sampai 3NF)
+├── guide/                  # User guideline (PDF)
+├── README.md / README.id.md
 └── .gitignore
 ```
 
 ## Cara menjalankan
 
 1. Pasang [XAMPP](https://www.apachefriends.org/) lalu jalankan Apache dan MySQL.
-2. Salin folder ini ke `C:\xampp\htdocs\apotek` (atau `/opt/lampp/htdocs/apotek`).
+2. Salin isi folder `app/` ke `C:\xampp\htdocs\apotek` (atau `/opt/lampp/htdocs/apotek`). File di dalam `app/` langsung masuk ke `apotek`, tanpa folder `app` tambahan.
 3. Buka phpMyAdmin (`http://localhost/phpmyadmin`) dan buat database kosong bernama `gff_farma`.
-4. Jika kredensial MySQL berbeda dari bawaan (`root`, tanpa password), ubah `db_connect.php`.
+4. Jika kredensial MySQL berbeda dari bawaan (`root`, tanpa password), ubah `app/db_connect.php`.
 5. Buka `http://localhost/apotek/login.php`. Tabel terbentuk otomatis.
-6. Login dengan akun admin bawaan yang ada di `db_connect.php`, atau daftar sebagai pelanggan.
+6. Login dengan akun admin bawaan yang ada di `app/db_connect.php`, atau daftar sebagai pelanggan.
 
-Untuk memuat 12 contoh obat tanpa input manual, impor `database.sql` lewat tab Import di phpMyAdmin.
+Untuk memuat 12 contoh obat tanpa input manual, impor `app/database.sql` lewat tab Import di phpMyAdmin.
 
 ## Catatan teknis
 
-- Susunan folder. Semua file `.php` dan `style.css` harus berada di folder yang sama. Antar halaman saling memanggil lewat path relatif (misalnya `include 'db_connect.php'`), jadi jangan dipindah ke subfolder.
-- Gambar. Gambar obat tidak diupload ke server. Di form tambah dan edit, admin menempelkan URL gambar (`URL Gambar`) yang disimpan di kolom `gambar`. Jika kosong atau link-nya rusak, ditampilkan placeholder abu-abu. Beberapa link gambar contoh berasal dari situs pihak ketiga dan bisa kedaluwarsa, jadi ganti dengan URL milikmu bila perlu. Tidak perlu folder gambar. Kartu founder memakai placeholder bawaan; untuk memakai foto sendiri, taruh file di sebelah `index.php` lalu ubah `src="fotomu.jpg"`.
+- Susunan folder. Semua file `.php` dan `style.css` di dalam `app/` harus berada di folder yang sama. Antar halaman saling memanggil lewat path relatif (misalnya `include 'db_connect.php'`), jadi jangan dipindah ke subfolder dari `app/`. GitHub Pages hanya menampilkan demo statis `index.html`. Ia tidak bisa menjalankan PHP atau MySQL, jadi aplikasi lengkap tetap membutuhkan XAMPP.
+- Gambar. Gambar obat tidak diupload ke server. Di form tambah dan edit, admin menempelkan URL gambar (`URL Gambar`) yang disimpan di kolom `gambar`. Jika kosong atau link-nya rusak, ditampilkan placeholder abu-abu. Beberapa link gambar contoh berasal dari situs pihak ketiga dan bisa kedaluwarsa, jadi ganti dengan URL milikmu bila perlu. Tidak perlu folder gambar. Kartu founder memakai placeholder bawaan; untuk memakai foto sendiri, taruh file di sebelah `app/index.php` lalu ubah `src="fotomu.jpg"`.
 - Koneksi internet. Ikon Font Awesome dimuat dari CDN dan gambar obat berupa URL eksternal, jadi ikon dan gambar tidak muncul saat offline.
-- Data contoh. Database dimulai kosong, hanya berisi admin bawaan. Impor `database.sql` untuk 12 contoh obat (lengkap dengan URL gambar) atau tambahkan lewat halaman admin. Pelanggan dibuat lewat sign up.
+- Data contoh. Database dimulai kosong, hanya berisi admin bawaan. Impor `app/database.sql` untuk 12 contoh obat (lengkap dengan URL gambar) atau tambahkan lewat halaman admin. Pelanggan dibuat lewat sign up.
 - Setup otomatis. `db_connect.php` menjalankan `CREATE TABLE IF NOT EXISTS` di setiap request, jadi mengimpor file `.sql` tidak wajib. Database `gff_farma` sendiri harus dibuat lebih dulu.
 - Kebutuhan. PHP dengan `mysqli` (mysqlnd) dan `mbstring`, serta MySQL atau MariaDB. Semuanya sudah ada di XAMPP. Diuji pada PHP 8.3 dengan MariaDB 10.11.
 - Session dan peran. Saat login, data user disimpan di `$_SESSION['user']`, dan halaman khusus admin memeriksa `is_admin`. `process_purchase.php` mengurangi stok saat pelanggan membeli, dan menghapus transaksi mengembalikannya.
@@ -102,6 +121,6 @@ Sudah diterapkan:
 - Halaman khusus admin dan helper AJAX memeriksa peran di server. Akun admin utama dan akun yang sedang dipakai tidak bisa dihapus.
 
 Tetap menjadi tanggung jawabmu bila di-deploy ke publik:
-- Ganti password admin bawaan di `db_connect.php` dan beri password pada MySQL, jangan pakai `root` tanpa password.
+- Ganti password admin bawaan di `app/db_connect.php` dan beri password pada MySQL, jangan pakai `root` tanpa password.
 - Gunakan HTTPS dan tambahkan pembatasan percobaan login.
-- Nomor pembayaran di `index.php` dan kontak di footer masih placeholder.
+- Nomor pembayaran di `app/index.php` dan kontak di footer masih placeholder.
