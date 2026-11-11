@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GFF Farma - Demo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+/* CSS Variables */
+:root {
+  --primary-color: #4b5733;
+  --secondary-color: #526746;
+  --text-color: #4e4b45;
+  --bg-color: #d9dbd8;
+  --sidebar-bg: #526746;
+  --sidebar-text: #d9dbd8;
+  --table-bg: #f8f8f8;
+  --table-header: #4b5733;
+  --table-hover: #e8e8e8;
+  --hero-text: #d9dbd8;
+  --footer-width: 100%;
+  --content-margin: 80px;
+  --accent-light: #b9ad9b;
+  --accent-dark: #6a654f;
+}
+
+/* Dark mode */
+.dark-mode {
+  --primary-color: #4b5733;
+  --secondary-color: #3a4a34;
+  --text-color: #d5c9b9;
+  --bg-color: #2a2a2a;
+  --sidebar-bg: #3a4a34;
+  --sidebar-text: #d5c9b9;
+  --table-bg: #333333;
+  --table-header: #2d3a24;
+  --table-hover: #3d3d3d;
+  --hero-text: #d5c9b9;
+  --accent-light: #6a654f;
+  --accent-dark: #4b5733;
+}
+
+/* Style Dasar */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Style Header */
+header {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  padding: 15px 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  height: 80px;
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-toggle .hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebar-toggle .line {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 3px;
+}
+
+header img {
+  height: 50px;
+  margin-right: 20px;
+  background: transparent;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  position: relative;
+}
+
+nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  animation: underline 0.3s ease;
+}
+
+@keyframes underline {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  color: var(--hero-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  margin-top: -80px;
+  width: 100vw;
+  left: 0;
+  background-attachment: fixed;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.hero h2 {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 10px 0 30px;
+}
+
+.hero .discover-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 30px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  margin-bottom: 30px;
+}
+
+.hero .discover-btn:hover {
+  background-color: var(--accent-dark);
+}
+
+/* Layout Main Content */
+.main-content {
+  display: flex;
+  flex: 1;
+  position: relative;
+  margin-top: 0;
+  flex-direction: column;
+}
+
+/* Style Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  padding: 0;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  position: fixed;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  overflow-y: auto;
+  transform: translateX(0);
+}
+
+.sidebar.collapsed {
+  transform: translateX(-250px);
+}
+
+.sidebar-header {
+  padding: 15px 20px;
+  background-color: var(--sidebar-bg);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.sidebar-content {
+  padding: 0 20px 20px 20px;
+}
+
+.sidebar h3 {
+  color: var(--accent-light);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  color: var(--sidebar-text);
+  text-decoration: none;
+  display: block;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.sidebar a:hover, .sidebar a.active {
+  background-color: rgba(255,255,255,0.1);
+  transform: translateX(5px);
+}
+
+.sidebar i {
+  margin-right: 10px;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+/* Content Container */
+.container {
+  padding: 40px 60px;
+  flex: 1;
+  transition: all 0.3s;
+  margin-left: 250px;
+  width: calc(100% - 250px);
+}
+
+.container.expanded {
+  margin-left: 0;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.content-wrapper {
+  position: relative;
+}
+
+/* Search Container */
+.search-container {
+  margin: 40px 60px 20px 60px;
+  display: flex;
+  position: relative;
+  z-index: 2;
+  background-color: var(--accent-light);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  max-width: 600px;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.search-container input {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+  background-color: var(--table-bg);
+  color: var(--text-color);
+}
+
+.search-container button {
+  padding: 10px 15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style Tabel */
+table {
+  width: calc(100% - 120px);
+  border-collapse: collapse;
+  background-color: var(--table-bg);
+  margin: 20px 60px;
+  position: relative;
+  z-index: 2;
+}
+
+th, td {
+  border: 1px solid var(--accent-dark);
+  padding: 12px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+th {
+  background-color: var(--table-header);
+  color: white;
+}
+
+tr:hover {
+  background-color: var(--table-hover);
+}
+
+/* Style Gambar Obat */
+.medicine-image-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: var(--accent-light);
+}
+
+.medicine-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.medicine-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+  padding: 10px;
+  color: white;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.medicine-image-container:hover .medicine-image-overlay {
+  opacity: 1;
+}
+
+.medicine-image-container:hover .medicine-image {
+  transform: scale(1.05);
+}
+
+/* Founders Section */
+.founders-section {
+  margin: 40px 60px;
+  padding: 30px;
+  background-color: var(--accent-light);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.founders-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary-color);
+}
+
+.founders-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.founder-card {
+  flex: 1;
+  min-width: 250px;
+  max-width: 320px;
+  text-align: center;
+  background-color: var(--table-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.founder-card:hover {
+  transform: translateY(-5px);
+}
+
+.founder-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  margin: 0 auto 15px;
+  border-radius: 8px;
+  border: 3px solid var(--primary-color);
+}
+
+.founder-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--primary-color);
+}
+
+.founder-title {
+  font-style: italic;
+  color: var(--text-color);
+}
+
+/* Style Footer */
+footer {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  padding: 30px 60px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: var(--footer-width);
+  transition: all 0.3s ease;
+  margin-left: 250px;
+  position: relative;
+  z-index: 2;
+}
+
+footer.expanded {
+  margin-left: 0;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  margin: 10px 20px;
+}
+
+.footer-section h3 {
+  border-bottom: 2px solid var(--accent-light);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.contact-info i {
+  margin-right: 10px;
+  color: var(--accent-light);
+}
+
+.social-links a {
+  color: white;
+  margin-right: 15px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* Style Tombol */
+.btn-add, .btn-edit, .btn-delete, .btn-submit, .btn-cancel {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-add {
+  background-color: var(--primary-color);
+  color: white;
+  margin: 20px 60px;
+}
+
+.btn-edit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-submit {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #757575;
+  color: white;
+}
+
+.btn-add:hover, .btn-edit:hover, .btn-delete:hover, 
+.btn-submit:hover, .btn-cancel:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* Style Formulir */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--accent-dark);
+  border-radius: 4px;
+  background-color: var(--table-bg);
+  color: var(--text-color);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Style Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: var(--table-bg);
+  margin: 5% auto;
+  padding: 25px;
+  border-radius: 8px;
+  width: 60%;
+  max-width: 700px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: modalopen 0.4s;
+  position: relative;
+}
+
+@keyframes modalopen {
+  from {opacity: 0; transform: translateY(-50px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--accent-dark);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.close-modal {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: var(--text-color);
+}
+
+.modal-body {
+  padding: 15px 0;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid var(--accent-dark);
+  padding-top: 15px;
+}
+
+.confirmation-modal .modal-content {
+  width: 40%;
+  text-align: center;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Style Responsif */
+@media (max-width: 768px) {
+  :root {
+    --content-margin: 20px;
+  }
+  
+  .sidebar {
+    top: 80px;
+    transform: translateX(-250px);
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .container {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 20px;
+  }
+  
+  footer {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 20px;
+  }
+  
+  .hero {
+    height: 100vh;
+    margin-top: 0;
+  }
+  
+  .hero h1 {
+    font-size: 36px;
+  }
+  
+  .hero h2 {
+    font-size: 18px;
+  }
+  
+  header {
+    flex-wrap: wrap;
+    height: auto;
+  }
+  
+  nav {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .search-container {
+    margin: 20px;
+  }
+  
+  table {
+    width: calc(100% - 40px);
+    margin: 20px;
+  }
+  
+  .founders-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .founder-card {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .founder-image {
+    height: 300px;
+  }
+  
+  .founders-section,
+  .search-container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .modal-content {
+    width: 90%;
+    margin: 10% auto;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }
+
+  .logo-link:hover {
+    opacity: 0.8;
+  }
+
+  #transactionTable th, 
+  #customerTable th {
+    background-color: var(--table-header);
+    color: white;
+  }
+
+  #transactionTable td, 
+  #customerTable td {
+    border: 1px solid var(--accent-dark);
+    padding: 12px;
+    text-align: center;
+    color: var(--text-color);
+  }
+
+  #transactionTable tr:hover, 
+  #customerTable tr:hover {
+    background-color: var(--table-hover);
+  }
+
+  .table-switcher {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--accent-dark);
+  }
+
+  .table-switcher button {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text-color);
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .table-switcher button.active {
+    border-bottom-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+}
+.demo-bar{background:#f0e3b8;color:#5b4a14;font-size:.85rem;padding:8px 14px;text-align:center;position:relative;z-index:1100}
+.demo-bar button{margin-left:10px;border:1px solid #5b4a14;background:transparent;color:inherit;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:.8rem}
+.demo-bar a{color:inherit;font-weight:bold}
+#auth{display:flex;justify-content:center;align-items:center;flex:1;padding:30px 14px}
+.auth-card{background:var(--table-bg);padding:34px;border-radius:8px;box-shadow:0 0 20px rgba(0,0,0,.15);width:100%;max-width:420px;box-sizing:border-box}
+.auth-card h1{color:var(--primary-color);margin:0 0 4px;text-align:center}
+.auth-card p.sub{text-align:center;margin:0 0 20px;font-size:.9rem}
+.auth-card .form-group input{width:100%;box-sizing:border-box}
+.auth-card .btn-submit{width:100%;margin-top:6px}
+.auth-err{color:#b3261e;font-size:.9rem;min-height:1.2em;margin:6px 0}
+.cred{background:rgba(75,87,51,.12);border-radius:6px;padding:10px 12px;margin-top:16px;font-size:.85rem;line-height:1.6}
+.cred button{border:1px solid var(--primary-color);background:transparent;color:var(--primary-color);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:.8rem;margin-left:6px}
+.auth-switch{text-align:center;margin-top:14px;font-size:.9rem}
+.auth-switch a{color:var(--primary-color);font-weight:bold;cursor:pointer}
+.empty{text-align:center;padding:28px;opacity:.7}
+.stok-0{color:#b3261e;font-weight:bold}
+.avatar{width:120px;height:120px;border-radius:50%;background:var(--accent-light);color:var(--primary-color);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 14px}
+#app{display:none;flex-direction:column;flex:1}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:6px;z-index:2000;font-size:.9rem;display:none}
+.row-actions{white-space:nowrap}
+.modal .form-group select,.modal .form-group textarea,.modal .form-group input{width:100%;box-sizing:border-box}
+.table-wrap{overflow-x:auto}
+@media (max-width:768px){.modal-content,.confirmation-modal .modal-content{width:90%}}
+</style>
+</head>
+<body>
+<div class="demo-bar">Versi demo. Data hanya tersimpan di browser kamu dan tidak dikirim ke server mana pun.
+  <button id="resetDemo" type="button">Reset data demo</button>
+  <a href="https://github.com/Febrianggi/php-mysql-pharmacy-database/tree/main/app" target="_blank" rel="noopener">Lihat versi lengkap (PHP dan MySQL)</a></div>
+
+<div id="auth">
+  <div class="auth-card">
+    <h1>GFF Farma</h1>
+    <p class="sub" id="authSub">Masuk untuk melihat database obat</p>
+    <form id="loginForm">
+      <div class="form-group"><label for="lu">Username</label><input id="lu" autocomplete="username" required></div>
+      <div class="form-group"><label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required></div>
+      <div class="auth-err" id="loginErr"></div>
+      <button class="btn-submit" type="submit">Masuk</button>
+    </form>
+    <form id="signForm" hidden>
+      <div class="form-group"><label for="su">Username</label><input id="su" required></div>
+      <div class="form-group"><label for="sn">Nama lengkap</label><input id="sn" required></div>
+      <div class="form-group"><label for="st">Telepon</label><input id="st" required></div>
+      <div class="form-group"><label for="sp">Password</label><input id="sp" type="password" required></div>
+      <div class="auth-err" id="signErr"></div>
+      <button class="btn-submit" type="submit">Daftar</button>
+    </form>
+    <div class="auth-switch"><span id="swTxt">Belum punya akun?</span> <a id="swLink">Daftar</a></div>
+    <div class="cred" id="cred">Akun demo:<br>
+      Pelanggan: <b>demo</b> / <b>demo123</b> <button type="button" data-u="demo" data-p="demo123">Isi otomatis</button><br>
+      Admin: <b>admin</b> / <b>admin123</b> <button type="button" data-u="admin" data-p="admin123">Isi otomatis</button></div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="header-left">
+      <button class="sidebar-toggle" id="sidebarToggle"><div class="hamburger"><div class="line"></div><div class="line"></div><div class="line"></div></div></button>
+      <a href="#heroSection" class="logo-link" style="display:flex;align-items:center;text-decoration:none;color:white"><i class="fas fa-clinic-medical" style="font-size:34px"></i><h1 style="margin-left:16px">GFF Farma</h1></a>
+    </div>
+    <nav>
+      <a href="#heroSection" class="nav-link">Home</a>
+      <a href="#foundersSection" class="nav-link">Tentang</a>
+      <a href="#medicineTableSection" class="nav-link">Tabel</a>
+      <a href="#footer" class="nav-link">Kontak</a>
+      <a href="#" class="nav-link" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </header>
+  <div class="main-content">
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header"><span>Menu</span><button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button></div>
+      <div class="sidebar-content">
+        <h3>Database Tables</h3>
+        <ul id="tblMenu"></ul>
+        <h3>Navigasi Obat</h3>
+        <ul>
+          <li><a data-f="all" class="filter-link"><i class="fas fa-tablets"></i> Semua Obat</a></li>
+          <li><a data-f="kapsul" class="filter-link"><i class="fas fa-capsules"></i> Kapsul</a></li>
+          <li><a data-f="tablet" class="filter-link"><i class="fas fa-pills"></i> Tablet</a></li>
+          <li><a data-f="suntik" class="filter-link"><i class="fas fa-syringe"></i> Suntik</a></li>
+          <li><a data-f="cair" class="filter-link"><i class="fas fa-thermometer"></i> Obat Cair</a></li>
+        </ul>
+        <h3>Kategori</h3>
+        <ul id="katMenu"></ul>
+      </div>
+    </div>
+    <div class="container" id="mainContainer">
+      <section class="hero" id="heroSection">
+        <div class="hero-content">
+          <h1 id="hello"></h1>
+          <h2>Database GFF Farma<br>est. 2025</h2>
+          <p>ad veritatem per caritatem</p>
+          <a href="#" class="discover-btn" id="discover">Discover More</a>
+        </div>
+      </section>
+      <section class="founders-section" id="foundersSection">
+        <h2>Our Founders</h2>
+        <div class="founders-grid">
+          <div class="founder-card"><div class="avatar"><i class="fas fa-user"></i></div><h3 class="founder-name">Your Name</h3><p class="founder-title">Database Design</p><p>Vanitas vanitatum. Et omnia vanitas.</p></div>
+          <div class="founder-card"><div class="avatar"><i class="fas fa-user"></i></div><h3 class="founder-name">Your Name</h3><p class="founder-title">Back-end</p><p>bonjour.</p></div>
+          <div class="founder-card"><div class="avatar"><i class="fas fa-user"></i></div><h3 class="founder-name">Your Name</h3><p class="founder-title">Front-end</p><p>Safe choices never made history.</p></div>
+        </div>
+      </section>
+      <div class="content-wrapper" id="medicineTableSection">
+        <div class="search-container">
+          <form class="search-form" id="searchForm"><input type="text" id="searchInput" placeholder="Cari data..."><button type="submit"><i class="fas fa-search"></i> Cari</button></form>
+          <button id="openPurchase" class="btn-add" type="button"><i class="fas fa-shopping-cart"></i> Beli Obat</button>
+          <button id="addMed" class="btn-add" type="button"><i class="fas fa-plus"></i> Tambah Obat</button>
+        </div>
+        <div class="table-wrap"><table id="theTable"></table></div>
+      </div>
+    </div>
+  </div>
+  <footer id="footer">
+    <div class="footer-section"><h3>Kontak Kami</h3>
+      <div class="contact-info"><i class="fas fa-map-marker-alt"></i><span>Alamat contoh, Indonesia</span></div>
+      <div class="contact-info"><i class="fas fa-phone"></i><span>(081) 234567890</span></div>
+      <div class="contact-info"><i class="fas fa-envelope"></i><span>info@gfffarma.example</span></div></div>
+    <div class="footer-section"><h3>Jam Operasional</h3><p>Senin - Jumat: 08.00 - 21.00</p><p>Sabtu: 08.00 - 18.00</p><p>Minggu: 09.00 - 15.00</p></div>
+    <div class="footer-section"><h3>Media Sosial</h3><div class="social-links"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div><p>Ikuti kami untuk info terbaru dan promo</p></div>
+  </footer>
+</div>
+
+<div id="purchaseModal" class="modal"><div class="modal-content">
+  <div class="modal-header"><h3>Form Pembelian Obat</h3><span class="close-modal">&times;</span></div>
+  <div class="modal-body"><form id="purchaseForm">
+    <div class="form-group"><label for="pk">Kode Obat</label><input id="pk" list="kodeList" required autocomplete="off"><datalist id="kodeList"></datalist></div>
+    <div class="form-group"><label for="pn">Nama Obat</label><input id="pn" readonly></div>
+    <div class="form-group"><label for="ph">Harga Satuan</label><input id="ph" readonly></div>
+    <div class="form-group"><label for="pj">Jumlah</label><input id="pj" type="number" min="1" required></div>
+    <div class="form-group"><label for="pt">Total Harga</label><input id="pt" readonly></div>
+    <div class="auth-err" id="purchErr"></div>
+    <div class="modal-footer"><button type="button" class="btn-cancel">Batal</button><button type="submit" class="btn-submit">Proses Pembelian</button></div>
+  </form></div></div></div>
+<div id="paymentModal" class="modal confirmation-modal"><div class="modal-content">
+  <div class="modal-header"><h3>Instruksi Pembayaran</h3></div>
+  <div class="modal-body"><p id="payTxt"></p></div>
+  <div class="confirmation-buttons"><button type="button" class="btn-submit" id="confirmPay">Saya Sudah Bayar</button></div></div></div>
+<div id="repurchaseModal" class="modal confirmation-modal"><div class="modal-content">
+  <div class="modal-header"><h3>Pembelian Berhasil</h3></div>
+  <div class="modal-body"><p>Pesanan Anda sedang diproses. Apakah ingin membeli lagi?</p></div>
+  <div class="confirmation-buttons"><button type="button" class="btn-submit" id="yesAgain">Ya</button><button type="button" class="btn-cancel" id="noAgain">Tidak</button></div></div></div>
+<div id="formModal" class="modal"><div class="modal-content">
+  <div class="modal-header"><h3 id="fmTitle"></h3><span class="close-modal">&times;</span></div>
+  <div class="modal-body"><form id="fmForm"><div id="fmFields"></div><div class="auth-err" id="fmErr"></div>
+    <div class="modal-footer"><button type="button" class="btn-cancel">Batal</button><button type="submit" class="btn-submit">Simpan</button></div></form></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SEED={"obat": [{"kode": "001", "nama": "Intunal", "harga": 5000, "jenis": "Tablet", "ket": "Tidak perlu resep", "gambar": "https://d3bbrrd0qs69m4.cloudfront.net/images/product/apotek_online_k24klik_20201222093945359225_INTUNAL-KAP.jpg", "kand": "Paracetamol, Phenylpropanolamine, Guaifenesin", "kat": "Flu & Batuk", "stok": 151}, {"kode": "002", "nama": "Betadine 5ml", "harga": 8000, "jenis": "Cair", "ket": "Tidak perlu resep", "gambar": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRrD3Q34A5cRZPy_5tMR60X_aeI8GjyOfjqBmxQMs8nUCeGPSCG-azu6ZxUk-Y3knTXfYjBJw4QPKvm5c1O2yt6qQ2mvrZEpwVUXEiVAiRg5Th9GlOluNkE", "kand": "Povidone Iodine", "kat": "Luka luar", "stok": 49}, {"kode": "003", "nama": "Bodrex", "harga": 11500, "jenis": "Tablet", "ket": "Tidak perlu resep", "gambar": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTrbNl_3x8RMxL2E6AgEN2bERqUuZTwdxeoBeQSvQmL1B_OxY794DHEXrJbfJb07lMBnUEhe7SZissU9qBsMRstQomtlLuQIPkvFfbl4m7tHxMaWS4f3TSrqQ", "kand": "Paracetamol, Caffein", "kat": "Nyeri & Demam", "stok": 35}, {"kode": "004", "nama": "Amlodipine 5mg", "harga": 5500, "jenis": "Tablet", "ket": "Perlu resep", "gambar": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/medium/catalog-image/100/MTA-181812628/amlodipine_amlodipine_full01.jpg", "kand": "Diuretik Thiazide", "kat": "Jantung", "stok": 11}, {"kode": "005", "nama": "Zyrtec", "harga": 285000, "jenis": "Kapsul", "ket": "Perlu resep", "gambar": "https://dev.spirit.com.kw/storage/product/1145/1737033413_31_0.webp", "kand": "Cetirizine Dihydrochloride", "kat": "Alergi", "stok": 5}, {"kode": "006", "nama": "Tempra Forte", "harga": 50000, "jenis": "Cair", "ket": "Perlu resep", "gambar": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQ4KmTl3ImJMoizP4MfioQrap8pIE7vS9wCKujEJYIU_zDfTEfDjDnAKscuIXN5YNQkg-apNoARHzR-izh3_hQfqhriTBK3u7aOdewKOh3_0qaJN3LvURGm", "kand": "Paracetamol", "kat": "Nyeri & Demam", "stok": 9}, {"kode": "007", "nama": "Panadol", "harga": 13000, "jenis": "Tablet", "ket": "Tidak perlu resep", "gambar": "https://d2qjkwm11akmwu.cloudfront.net/products/695343_19-11-2024_13-42-19.png", "kand": "Paracetamol", "kat": "Nyeri & Demam", "stok": 37}, {"kode": "008", "nama": "Cetirizine", "harga": 55500, "jenis": "Tablet", "ket": "Perlu resep", "gambar": "https://d3bbrrd0qs69m4.cloudfront.net/images/product/apotek_online_k24klik_20230406105349359225_CETIRIZINE-KF.png", "kand": "Hydrochloride", "kat": "Alergi", "stok": 17}, {"kode": "009", "nama": "OBH Combi", "harga": 16000, "jenis": "Cair", "ket": "Tidak perlu resep", "gambar": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/104/MTA-96823535/obh_obat-batuk-obh-combi-reguler-100ml_full01.jpg", "kand": "Succus Liquiritiae, Paracetamol, Ammonium Chloride", "kat": "Flu & Batuk", "stok": 54}, {"kode": "010", "nama": "Promag", "harga": 9000, "jenis": "Tablet", "ket": "Tidak perlu resep", "gambar": "https://d3bbrrd0qs69m4.cloudfront.net/images/product/0101a0147.jpg", "kand": "Magnesium Hidroksida, Hydrotalcite", "kat": "Nyeri & Demam", "stok": 43}, {"kode": "011", "nama": "Ampicilin 500mg", "harga": 12500, "jenis": "Tablet", "ket": "Perlu resep", "gambar": "https://d3bbrrd0qs69m4.cloudfront.net/images/product/apotek_online_k24klik_201608180558471922_726-Ampicillin.jpg", "kand": "Ampicillin", "kat": "Antibiotik", "stok": 7}, {"kode": "012", "nama": "Clobazam", "harga": 30000, "jenis": "Tablet", "ket": "Perlu resep", "gambar": "https://kalbemed.com/storage/images/products/a3e4db7dec789c91465d604c62040956.jpg", "kand": "Clobazam", "kat": "Saraf", "stok": 0}], "users": [{"u": "admin", "nama": "Admin GFF", "tel": "0812-0000-0000", "pw": "admin123", "admin": true}, {"u": "demo", "nama": "Pelanggan Demo", "tel": "0812-0000-0001", "pw": "demo123", "admin": false}, {"u": "budi", "nama": "Budi Santoso", "tel": "0812-0000-0002", "pw": "demo123", "admin": false}, {"u": "siti", "nama": "Siti Rahma", "tel": "0812-0000-0003", "pw": "demo123", "admin": false}, {"u": "andi", "nama": "Andi Wijaya", "tel": "0812-0000-0004", "pw": "demo123", "admin": false}, {"u": "dewi", "nama": "Dewi Lestari", "tel": "0812-0000-0005", "pw": "demo123", "admin": false}, {"u": "rina", "nama": "Rina Putri", "tel": "0812-0000-0006", "pw": "demo123", "admin": false}, {"u": "agus", "nama": "Agus Pratama", "tel": "0812-0000-0007", "pw": "demo123", "admin": false}, {"u": "maya", "nama": "Maya Sari", "tel": "0812-0000-0008", "pw": "demo123", "admin": false}, {"u": "dimas", "nama": "Dimas Prakoso", "tel": "0812-0000-0009", "pw": "demo123", "admin": false}, {"u": "nadia", "nama": "Nadia Kusuma", "tel": "0812-0000-0010", "pw": "demo123", "admin": false}, {"u": "fajar", "nama": "Fajar Nugroho", "tel": "0812-0000-0011", "pw": "demo123", "admin": false}], "tr": [{"id": 3, "u": "nadia", "kode": "007", "jml": 1, "tgl": "2025-06-18"}, {"id": 4, "u": "andi", "kode": "001", "jml": 3, "tgl": "2025-06-18"}, {"id": 5, "u": "budi", "kode": "002", "jml": 15, "tgl": "2025-06-18"}, {"id": 6, "u": "budi", "kode": "003", "jml": 15, "tgl": "2025-06-18"}, {"id": 7, "u": "dewi", "kode": "003", "jml": 7, "tgl": "2025-06-18"}, {"id": 8, "u": "dewi", "kode": "006", "jml": 1, "tgl": "2025-06-18"}, {"id": 9, "u": "agus", "kode": "012", "jml": 1, "tgl": "2025-06-18"}, {"id": 10, "u": "agus", "kode": "007", "jml": 2, "tgl": "2025-06-18"}, {"id": 11, "u": "agus", "kode": "002", "jml": 1, "tgl": "2025-06-18"}, {"id": 12, "u": "maya", "kode": "002", "jml": 21, "tgl": "2025-06-18"}, {"id": 13, "u": "maya", "kode": "003", "jml": 7, "tgl": "2025-06-18"}, {"id": 14, "u": "maya", "kode": "009", "jml": 19, "tgl": "2025-06-18"}, {"id": 15, "u": "dimas", "kode": "011", "jml": 1, "tgl": "2025-06-18"}, {"id": 16, "u": "fajar", "kode": "008", "jml": 2, "tgl": "2025-06-18"}, {"id": 17, "u": "fajar", "kode": "002", "jml": 1, "tgl": "2025-06-18"}, {"id": 18, "u": "rina", "kode": "001", "jml": 1, "tgl": "2025-06-19"}, {"id": 19, "u": "rina", "kode": "009", "jml": 2, "tgl": "2025-06-19"}, {"id": 20, "u": "rina", "kode": "003", "jml": 1, "tgl": "2025-06-19"}, {"id": 21, "u": "rina", "kode": "002", "jml": 3, "tgl": "2025-06-19"}, {"id": 22, "u": "siti", "kode": "004", "jml": 1, "tgl": "2025-06-19"}, {"id": 23, "u": "siti", "kode": "008", "jml": 1, "tgl": "2025-06-19"}], "nextTr": 24};
+const KEY='gff-farma-demo-v1',rp=n=>'Rp '+Number(n).toLocaleString('id-ID'),$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const PH='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" rx="8" fill="#d9dbd8"/><g transform="rotate(-35 40 40)"><rect x="14" y="28" width="52" height="24" rx="12" fill="#fff" stroke="#4b5733" stroke-width="3"/><path d="M40 28h14a12 12 0 0 1 0 24H40z" fill="#4b5733"/></g></svg>');
+let db=load(),me=null,view={table:'medicine',filter:'all',search:''};
+function fresh(){return JSON.parse(JSON.stringify(SEED))}
+function load(){try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s)}catch(e){}return fresh()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}}
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',2600)}
+const user=u=>db.users.find(x=>x.u===u),med=k=>db.obat.find(x=>x.kode===k);
+const isAdmin=()=>me&&me.admin;
+
+/* auth */
+let signMode=false;
+function authMode(m){signMode=m;$('#loginForm').hidden=m;$('#signForm').hidden=!m;$('#authSub').textContent=m?'Buat akun pelanggan baru':'Masuk untuk melihat database obat';$('#swTxt').textContent=m?'Sudah punya akun?':'Belum punya akun?';$('#swLink').textContent=m?'Masuk':'Daftar';$('#cred').hidden=m}
+$('#swLink').onclick=()=>authMode(!signMode);
+$$('#cred button').forEach(b=>b.onclick=()=>{$('#lu').value=b.dataset.u;$('#lp').value=b.dataset.p});
+$('#loginForm').onsubmit=e=>{e.preventDefault();const u=user($('#lu').value.trim());
+  if(!u)return $('#loginErr').textContent='Username tidak ditemukan';
+  if(u.pw!==$('#lp').value)return $('#loginErr').textContent='Password salah';
+  $('#loginErr').textContent='';startSession(u.u)};
+$('#signForm').onsubmit=e=>{e.preventDefault();const u=$('#su').value.trim();
+  if(user(u))return $('#signErr').textContent='Username sudah dipakai';
+  db.users.push({u,nama:$('#sn').value.trim(),tel:$('#st').value.trim(),pw:$('#sp').value,admin:false});save();
+  $('#signErr').textContent='';authMode(false);$('#lu').value=u;$('#lp').value='';toast('Akun dibuat. Silakan masuk.')};
+function startSession(u){const x=user(u);me={u:x.u,nama:x.nama,admin:x.admin};try{sessionStorage.setItem('gff-me',u)}catch(e){}
+  $('#auth').style.display='none';$('#app').style.display='flex';view={table:'medicine',filter:'all',search:''};$('#searchInput').value='';
+  $('#hello').textContent='Hello, '+me.nama;render();window.scrollTo(0,0)}
+$('#logoutLink').onclick=e=>{e.preventDefault();me=null;try{sessionStorage.removeItem('gff-me')}catch(e){}$('#app').style.display='none';$('#auth').style.display='flex';$('#lp').value=''};
+$('#resetDemo').onclick=()=>{db=fresh();save();if(me&&!user(me.u)){$('#logoutLink').click()}else if(me)render();toast('Data demo dikembalikan ke awal')};
+
+/* sidebar, theme, scroll */
+const sb=$('#sidebar'),mc=$('#mainContainer'),ft=$('#footer');
+function setSb(c){sb.classList.toggle('collapsed',c);mc.classList.toggle('expanded',c);ft.classList.toggle('expanded',c)}
+$('#sidebarToggle').onclick=()=>{setSb(!sb.classList.contains('collapsed'));try{localStorage.setItem('gff-sb',sb.classList.contains('collapsed'))}catch(e){}};
+try{if(localStorage.getItem('gff-sb')==='true')setSb(true)}catch(e){}
+if(innerWidth<=768)setSb(true);
+function theme(d){document.body.classList.toggle('dark-mode',d);$('#themeToggle i').className='fas '+(d?'fa-sun':'fa-moon');try{localStorage.setItem('gff-dark',d)}catch(e){}}
+$('#themeToggle').onclick=()=>theme(!document.body.classList.contains('dark-mode'));
+try{if(localStorage.getItem('gff-dark')==='true')theme(true)}catch(e){}
+$('#heroSection').style.backgroundImage="url('https://ihpl.llu.edu/sites/ihpl.llu.edu/files/field/image/GettyImages-1217730390.jpg'),linear-gradient(135deg,#3a4a34,#6a654f)";
+$('#discover').onclick=e=>{e.preventDefault();$('#foundersSection').scrollIntoView({behavior:'smooth'})};
+$$('.nav-link[href^="#"]').forEach(a=>{if(a.id==='logoutLink')return;a.onclick=e=>{e.preventDefault();const t=$(a.getAttribute('href'));if(t)scrollTo({top:t.getBoundingClientRect().top+pageYOffset-$('header').offsetHeight,behavior:'smooth'})}});
+document.addEventListener('error',e=>{const t=e.target;if(t.classList&&t.classList.contains('medicine-image')&&t.src!==PH)t.src=PH},true);
+
+/* modals */
+const open=id=>$(id).style.display='block',close=id=>$(id).style.display='none';
+$$('.close-modal,.btn-cancel').forEach(b=>b.onclick=()=>$$('.modal').forEach(m=>{if(m.id!=='paymentModal'&&m.id!=='repurchaseModal')m.style.display='none'}));
+$$('.modal').forEach(m=>m.addEventListener('mousedown',e=>{if(e.target===m&&m.id!=='paymentModal'&&m.id!=='repurchaseModal')m.style.display='none'}));
+
+/* purchase */
+let pend=null;
+function fillPurchase(){const m=med($('#pk').value.trim());$('#pn').value=m?m.nama:'';$('#ph').value=m?rp(m.harga):'';const j=+$('#pj').value||0;$('#pt').value=m&&j?rp(m.harga*j):''}
+$('#openPurchase').onclick=()=>{$('#purchaseForm').reset();$('#purchErr').textContent='';$('#kodeList').innerHTML=db.obat.map(o=>'<option value="'+esc(o.kode)+'">'+esc(o.nama)+'</option>').join('');open('#purchaseModal')};
+$('#pk').oninput=fillPurchase;$('#pj').oninput=fillPurchase;
+$('#purchaseForm').onsubmit=e=>{e.preventDefault();const m=med($('#pk').value.trim()),j=Math.floor(+$('#pj').value);
+  if(!m)return $('#purchErr').textContent='Obat tidak ditemukan';if(j<1)return $('#purchErr').textContent='Jumlah tidak valid';
+  if(m.stok===0)return $('#purchErr').textContent='Stok habis';if(m.stok<j)return $('#purchErr').textContent='Stok tidak mencukupi';
+  pend={kode:m.kode,jml:j};$('#payTxt').textContent='Silakan lakukan pembayaran ke nomor 081234567890 sebesar '+rp(m.harga*j)+'. Apabila sudah melakukan pembayaran, silakan tunggu konfirmasi dari kami ya.';close('#purchaseModal');open('#paymentModal')};
+$('#confirmPay').onclick=()=>{const m=med(pend.kode);if(!m||m.stok<pend.jml){close('#paymentModal');return toast('Stok berubah, pembelian dibatalkan')}
+  m.stok-=pend.jml;db.tr.push({id:db.nextTr++,u:me.u,kode:pend.kode,jml:pend.jml,tgl:new Date().toISOString().slice(0,10)});save();pend=null;close('#paymentModal');open('#repurchaseModal');render()};
+$('#yesAgain').onclick=()=>{close('#repurchaseModal');$('#openPurchase').click()};$('#noAgain').onclick=()=>close('#repurchaseModal');
+
+/* admin forms */
+const JENIS=['Tablet','Kapsul','Cair','Suntik'];
+function openForm(title,fields,vals,onSave){$('#fmTitle').textContent=title;$('#fmErr').textContent='';
+  $('#fmFields').innerHTML=fields.map(f=>{const v=vals[f.k]==null?'':vals[f.k],id='f_'+f.k,ro=f.ro?' readonly':'';let inp;
+    if(f.t==='select')inp='<select id="'+id+'">'+f.o.map(o=>'<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select>';
+    else if(f.t==='textarea')inp='<textarea id="'+id+'" rows="3">'+esc(v)+'</textarea>';
+    else inp='<input id="'+id+'" type="'+(f.t||'text')+'" value="'+esc(v)+'"'+ro+(f.req?' required':'')+(f.min!=null?' min="'+f.min+'"':'')+'>';
+    return '<div class="form-group"><label for="'+id+'">'+esc(f.l)+'</label>'+inp+'</div>'}).join('');
+  $('#fmForm').onsubmit=e=>{e.preventDefault();const o={};fields.forEach(f=>o[f.k]=$('#f_'+f.k).value);const err=onSave(o);if(err)return $('#fmErr').textContent=err;save();close('#formModal');render()};open('#formModal')}
+const medFields=add=>[{k:'kode',l:'Kode Obat',req:1,ro:!add},{k:'nama',l:'Nama Obat',req:1},{k:'stok',l:'Stok',t:'number',min:0,req:1},{k:'harga',l:'Harga',t:'number',min:0,req:1},{k:'jenis',l:'Jenis',t:'select',o:JENIS},{k:'ket',l:'Keterangan',t:'textarea'},{k:'gambar',l:'URL gambar (opsional)'},{k:'kand',l:'Kandungan',req:1},{k:'kat',l:'Kategori',req:1}];
+$('#addMed').onclick=()=>openForm('Tambah Obat',medFields(true),{jenis:'Tablet'},o=>{o.kode=o.kode.trim();if(med(o.kode))return 'Kode obat sudah ada';db.obat.push({...o,stok:+o.stok,harga:+o.harga});});
+function editMed(k){const m=med(k);openForm('Edit Obat',medFields(false),m,o=>{Object.assign(m,o,{stok:+o.stok,harga:+o.harga,kode:k})})}
+function delMed(k){if(db.tr.some(t=>t.kode===k))return toast('Obat ini dipakai di transaksi, hapus transaksinya dulu');if(confirm('Yakin ingin menghapus?')){db.obat=db.obat.filter(o=>o.kode!==k);save();render()}}
+function editTr(id){const t=db.tr.find(x=>x.id===id);openForm('Edit Transaksi',[{k:'u',l:'Username',t:'select',o:db.users.map(x=>x.u)},{k:'kode',l:'Kode Obat',t:'select',o:db.obat.map(x=>x.kode)},{k:'jml',l:'Jumlah',t:'number',min:1,req:1},{k:'tgl',l:'Tanggal',t:'date',req:1}],t,o=>{Object.assign(t,{u:o.u,kode:o.kode,jml:+o.jml,tgl:o.tgl})})}
+function delTr(id){if(confirm('Yakin ingin menghapus?')){db.tr=db.tr.filter(t=>t.id!==id);save();render()}}
+function editUser(u){const x=user(u);openForm('Edit User',[{k:'u',l:'Username',ro:1},{k:'nama',l:'Nama Lengkap',req:1},{k:'tel',l:'Telepon',req:1},{k:'pw',l:'Password',req:1}],x,o=>{Object.assign(x,{nama:o.nama,tel:o.tel,pw:o.pw})})}
+function delUser(u){if(db.tr.some(t=>t.u===u))return toast('User ini punya transaksi, hapus transaksinya dulu');if(confirm('Yakin ingin menghapus?')){db.users=db.users.filter(x=>x.u!==u);save();render()}}
+
+/* render */
+const KATICON={'Flu & Batuk':'head-side-cough','Nyeri & Demam':'tooth','Alergi':'allergies','Jantung':'heart'};
+$('#searchForm').onsubmit=e=>{e.preventDefault();view.search=$('#searchInput').value.trim();render()};
+function side(){
+  const T=[['medicine','pills','Daftar Obat']];if(isAdmin())T.push(['transaction','receipt','Transaksi'],['customer','users','User']);
+  $('#tblMenu').innerHTML=T.map(t=>'<li><a data-t="'+t[0]+'" class="'+(view.table===t[0]?'active':'')+'"><i class="fas fa-'+t[1]+'"></i> '+t[2]+'</a></li>').join('');
+  const kats=[...new Set([...Object.keys(KATICON),...db.obat.map(o=>o.kat)])];
+  $('#katMenu').innerHTML=kats.map(k=>'<li><a data-f="'+esc(k)+'" class="filter-link"><i class="fas fa-'+(KATICON[k]||'notes-medical')+'"></i> '+esc(k)+'</a></li>').join('');
+  $$('#tblMenu a').forEach(a=>a.onclick=()=>{view.table=a.dataset.t;view.filter='all';view.search='';$('#searchInput').value='';render()});
+  $$('.filter-link').forEach(a=>{a.classList.toggle('active',view.table==='medicine'&&a.dataset.f===view.filter);a.onclick=()=>{view.table='medicine';view.filter=a.dataset.f;render();$('#medicineTableSection').scrollIntoView({behavior:'smooth'})}})}
+function match(vals){const q=view.search.toLowerCase();return !q||vals.some(v=>String(v).toLowerCase().includes(q))}
+function tbl(head,rows,empty){return '<thead><tr>'+head.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+(rows.length?rows.join(''):'<tr><td class="empty" colspan="'+head.length+'">'+empty+'</td></tr>')+'</tbody>'}
+function render(){
+  if(!isAdmin())view.table='medicine';side();
+  $('#openPurchase').style.display=isAdmin()?'none':'';$('#addMed').style.display=isAdmin()&&view.table==='medicine'?'':'none';
+  const ad=isAdmin(),act=(a,b)=>ad?['<td class="row-actions">'+a+' '+b+'</td>']:[''];let h;
+  if(view.table==='transaction'){
+    const rows=db.tr.slice().sort((a,b)=>a.id-b.id).map(t=>({t,u:user(t.u),m:med(t.kode)})).filter(r=>r.u&&r.m&&match([r.t.u,r.u.nama,r.t.kode,r.m.nama]))
+      .map(r=>'<tr><td>'+r.t.id+'</td><td>'+esc(r.t.u)+'</td><td>'+esc(r.u.nama)+'</td><td>'+esc(r.t.kode)+'</td><td>'+esc(r.m.nama)+'</td><td>'+esc(r.t.tgl)+'</td><td>'+r.t.jml+'</td><td>'+rp(r.m.harga)+'</td><td>'+rp(r.m.harga*r.t.jml)+'</td><td class="row-actions"><a class="btn-edit" data-e="tr" data-id="'+r.t.id+'">Edit</a> <a class="btn-delete" data-d="tr" data-id="'+r.t.id+'">Hapus</a></td></tr>');
+    h=tbl(['ID','Username','Nama Pelanggan','Kode Obat','Nama Obat','Tanggal','Jumlah','Harga Satuan','Total','Aksi'],rows,'Tidak ada data')}
+  else if(view.table==='customer'){
+    const rows=db.users.slice().sort((a,b)=>a.u.localeCompare(b.u)).filter(x=>match([x.u,x.nama,x.tel])).map(x=>'<tr><td>'+esc(x.u)+'</td><td>'+esc(x.nama)+'</td><td>'+esc(x.tel)+'</td><td>'+(x.admin?'Admin':'Pelanggan')+'</td><td class="row-actions"><a class="btn-edit" data-e="user" data-id="'+esc(x.u)+'">Edit</a>'+(x.u==='admin'?'':' <a class="btn-delete" data-d="user" data-id="'+esc(x.u)+'">Hapus</a>')+'</td></tr>');
+    h=tbl(['Username','Nama Lengkap','Telepon','Peran','Aksi'],rows,'Tidak ada data')}
+  else{
+    const f=view.filter.toLowerCase();
+    const rows=db.obat.slice().sort((a,b)=>a.kode.localeCompare(b.kode)).filter(o=>match([o.nama,o.kode,o.kand])&&(f==='all'||o.jenis.toLowerCase()===f||o.kat.toLowerCase()===f))
+      .map(o=>'<tr><td>'+esc(o.kode)+'</td><td>'+esc(o.nama)+'</td><td class="'+(o.stok===0?'stok-0':'')+'">'+o.stok+'</td><td>'+esc(o.jenis)+'</td><td>'+esc(o.ket)+'</td><td><div class="medicine-image-container"><img src="'+esc(o.gambar||PH)+'" alt="'+esc(o.nama)+'" class="medicine-image" loading="lazy" referrerpolicy="no-referrer"><div class="medicine-image-overlay">'+esc(o.nama)+'</div></div></td><td>'+esc(o.kand)+'</td><td>'+esc(o.kat)+'</td><td>'+rp(o.harga)+'</td>'+(ad?'<td class="row-actions"><a class="btn-edit" data-e="med" data-id="'+esc(o.kode)+'">Edit</a> <a class="btn-delete" data-d="med" data-id="'+esc(o.kode)+'">Hapus</a></td>':'')+'</tr>');
+    h=tbl(['Kode Obat','Nama Obat','Stock','Jenis','Keterangan','Gambar','Kandungan','Kategori','Harga'].concat(ad?['Aksi']:[]),rows,'Tidak ada data')}
+  $('#theTable').innerHTML=h;
+  $$('#theTable [data-e]').forEach(a=>a.onclick=()=>({med:editMed,tr:id=>editTr(+id),user:editUser})[a.dataset.e](a.dataset.id));
+  $$('#theTable [data-d]').forEach(a=>a.onclick=()=>({med:delMed,tr:id=>delTr(+id),user:delUser})[a.dataset.d](a.dataset.id))}
+/* restore session */
+try{const s=sessionStorage.getItem('gff-me');if(s&&user(s))startSession(s)}catch(e){}
+</script>
+</body>
+</html>
