@@ -185,21 +185,18 @@ $rows = db_all($kon, $query, $types, $params);
         <h2>Our Founders</h2>
         <div class="founders-grid">
           <div class="founder-card">
-              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23cfd8dc'/%3E%3Ccircle cx='50' cy='38' r='18' fill='%2390a4ae'/%3E%3Cpath d='M14 100c0-24 16-38 36-38s36 14 36 38z' fill='%2390a4ae'/%3E%3C/svg%3E" alt="Your Name" class="founder-image">
-              <h3 class="founder-name">Your Name</h3>
-              <p class="founder-title">Student ID: 000000000000</p>
+              <img src="img/founder-febri.jpg" alt="Febrianggi Caesar Immanuel" loading="lazy" class="founder-image">
+              <h3 class="founder-name">Febrianggi Caesar Immanuel</h3>
               <p>Your quote here.</p>
           </div>
           <div class="founder-card">
-              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23cfd8dc'/%3E%3Ccircle cx='50' cy='38' r='18' fill='%2390a4ae'/%3E%3Cpath d='M14 100c0-24 16-38 36-38s36 14 36 38z' fill='%2390a4ae'/%3E%3C/svg%3E" alt="Your Name" class="founder-image">
-              <h3 class="founder-name">Your Name</h3>
-              <p class="founder-title">Student ID: 000000000000</p>
+              <img src="img/founder-fadhli.jpg" alt="Muhamad Fadhli Alfarizi" loading="lazy" class="founder-image">
+              <h3 class="founder-name">Muhamad Fadhli Alfarizi</h3>
               <p>Your quote here.</p>
           </div>
           <div class="founder-card">
-              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23cfd8dc'/%3E%3Ccircle cx='50' cy='38' r='18' fill='%2390a4ae'/%3E%3Cpath d='M14 100c0-24 16-38 36-38s36 14 36 38z' fill='%2390a4ae'/%3E%3C/svg%3E" alt="Your Name" class="founder-image">
-              <h3 class="founder-name">Your Name</h3>
-              <p class="founder-title">Student ID: 000000000000</p>
+              <img src="img/founder-grego.jpg" alt="Gregorius Adiyatma Pradana" loading="lazy" class="founder-image">
+              <h3 class="founder-name">Gregorius Adiyatma Pradana</h3>
               <p>Your quote here.</p>
           </div>
         </div>
